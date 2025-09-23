@@ -40,9 +40,9 @@
 
 ### ***Credits***
 
-##### Flappy bird: [birb] https://www.pngall.com/flappy-bird-png/
+##### Flappy bird:https://www.pngall.com/flappy-bird-png/
 
-##### Pipes:[pipe] https://pixelartmaker.com/art/8afdf6b0f55c0d6
+##### Pipes:https://pixelartmaker.com/art/8afdf6b0f55c0d6
 
 ***
 
