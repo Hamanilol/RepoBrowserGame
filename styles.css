@@ -1,8 +1,10 @@
 body {
   background-image: url(FlappyBird/FrontBGImage.gif);
-  background-size: cover;
+  background-size: auto;
   font-family: 'Press Start 2P';
   color: white;
+  height: 90vh;
+  background-repeat: repeat-x;
 
 }
 
@@ -21,12 +23,25 @@ h2 {
   color: red;
 }
 
-#retroButton {
-  display: flex;
-  justify-content: center;
+.retroBtn {
+  width: 20%;
+  height: 55%;
+  background-size: contain;
+  border: none;
+  cursor: pointer;
   position: absolute;
-  bottom: 50px;
-  left: 50%;
-  font-size: 2.5rem;
-  padding: 10px 20px;
+  left: 40%;
+  bottom: 10px;
+
+}
+
+* hover glow */
+.retroBtn:hover {
+  filter: brightness(1.2);
+}
+
+/* click effect */
+.retroBtn:active {
+  transform: scale(0.9);
+  filter: brightness(0.8);
 }

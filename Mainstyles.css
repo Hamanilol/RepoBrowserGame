@@ -1,0 +1,25 @@
+body {
+  background-image: url("./FlappyBird/Bgflappy.webp");
+  background-size: 75%;
+}
+.birbs {
+  height: 10%;
+  width: 9%;
+  position: absolute;
+  left: 100px;
+  top: 100px
+}
+.lowerpipe{
+  width: 5%;
+  height: 40%;
+  position: absolute;
+  bottom: 0;
+  right: 40%;
+}
+.upperpipe {
+  width: 5%;
+  height: 40%;
+  position: absolute;
+  top: 0;
+  right: 40%;
+}

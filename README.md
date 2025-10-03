@@ -1,5 +1,4 @@
 
-![alt text](image.png)
 
 # RepoBrowserGame
 
@@ -30,10 +29,10 @@
 ### ***Screenshots***
 
 ##### image header 1
-![FrontPage](image.png)
+![FrontPage](./image/image.png)
 
 ##### image header 2
-![Game](image-1.png)
+![Game](./image/image-1.png)
 
 ### ***Future Updates***
 
