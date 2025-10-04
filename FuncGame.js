@@ -28,17 +28,18 @@ const generatePipes = () => {
   const gap = 140;
   const minPipeHeight = 50;
   const maxPipeHeight = gameArea.clientHeight - gap - minPipeHeight;
-  const topPipeHeight =
-    Math.floor(Math.random() * (maxPipeHeight - minPipeHeight)) + minPipeHeight;
+  const topPipeHeight = Math.floor(Math.random() * (maxPipeHeight - minPipeHeight)) + minPipeHeight;
   const bottomPipeHeight = gameArea.clientHeight - topPipeHeight - gap;
 
-  const topPipe = document.createElement("div");
-  topPipe.className = "upperpipe";
+  const topPipe = document.createElement("img");
+  topPipe.src = "./FlappyBird/toppipe.png";
+  topPipe.classList.add("upperpipe");
   topPipe.style.height = `${topPipeHeight}px`;
   topPipe.style.left = `${gameArea.clientWidth}px`;
 
-  const bottomPipe = document.createElement("div");
-  bottomPipe.className = "lowerpipe";
+  const bottomPipe = document.createElement("img");
+  bottomPipe.src = "./FlappyBird/bottompipe.png";
+  bottomPipe.classList.add("lowerpipe");
   bottomPipe.style.height = `${bottomPipeHeight}px`;
   bottomPipe.style.left = `${gameArea.clientWidth}px`;
 
@@ -47,7 +48,7 @@ const generatePipes = () => {
 
   pipes.push({ top: topPipe, bottom: bottomPipe });
 };
-
+ 
 // Move pipes
 const movePipes = () => {
   pipes.forEach((pipePair, index) => {
@@ -92,6 +93,45 @@ const checkCollision = () => {
     console.log("Hit the ground!");
   }
 };
+
+//ORRR
+//const checkCollision = () => {
+  // Bird position and size
+//   const birdLeft = birbaction.offsetLeft;
+//   const birdTop = birbaction.offsetTop;
+//   const birdRight = birdLeft + birbaction.offsetWidth;
+//   const birdBottom = birdTop + birbaction.offsetHeight;
+
+//   
+//   const upperLeft = upperpipes.offsetLeft;
+//   const upperTop = upperpipes.offsetTop;
+//   const upperRight = upperLeft + upperpipes.offsetWidth;
+//   const upperBottom = upperTop + upperpipes.offsetHeight;
+
+
+//   const lowerLeft = lowerpipes.offsetLeft;
+//   const lowerTop = lowerpipes.offsetTop;
+//   const lowerRight = lowerLeft + lowerpipes.offsetWidth;
+//   const lowerBottom = lowerTop + lowerpipes.offsetHeight;
+
+//   Check collision with upper pipe
+//   const hitUpper =
+//     birdRight > upperLeft &&
+//     birdLeft < upperRight &&
+//     birdTop < upperBottom;
+
+//   Check collision with lower pipe
+//   const hitLower =
+//     birdRight > lowerLeft &&
+//     birdLeft < lowerRight &&
+//     birdBottom > lowerTop;
+
+//
+//   if (hitUpper || hitLower) {
+//     isGameOver = true;
+//     console.log(" Collision detected!");
+//   }
+// };
 
 // Main loop
 const gameLoop = () => {

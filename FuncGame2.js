@@ -1,105 +1,112 @@
-const game = document.getElementById("game");
-    const birb = document.getElementById("birb");
-    const scoreDisplay = document.getElementById("score");
+// Select elements
+const birdEl = document.querySelector(".birbs");
+const gameArea = document.getElementById("container");
 
-    let y = 200;
-    let velocity = 0;
-    const gravity = 0.5;
-    const jump = -8;
-    let score = 0;
+// Bird physics
+let birdX = 100;
+let birdY = 150;
+let velocity = 0;
+const gravity = 0.5;
+const jumpStrength = -8;
 
-    // Jump on spacebar
-    window.addEventListener("keydown", e => {
-      if (e.code === "Space") {
-        velocity = jump;
-      }
-    });
+// Game state
+let isGameOver = false;
+const pipeSpeed = 2;
+const pipes = [];
 
-    // Generate pipes
-    const generatePipe = () => {
-      const gap = 150;
-      const minHeight = 50;
-      const maxHeight = window.innerHeight - gap - minHeight;
-      const upperHeight = Math.floor(Math.random() * (maxHeight - minHeight) + minHeight);
-      const lowerHeight = window.innerHeight - upperHeight - gap;
+// Controls
+document.addEventListener("keydown", e => {
+  if (e.code === "Space" || e.code === "ArrowUp") velocity = jumpStrength;
+});
 
-      const pipeX = window.innerWidth;
+// Generate pipes dynamically
+const generatePipes = () => {
+  if (isGameOver) return;
 
-      const upperPipe = document.createElement("div");
-      upperPipe.classList.add("pipe", "upper");
-      upperPipe.style.height = `${upperHeight}px`;
-      upperPipe.style.left = `${pipeX}px`;
+  const gap = 180;
+  const minPipeHeight = 70;
+  const maxPipeHeight = gameArea.clientHeight - gap - minPipeHeight;
+  const topPipeHeight = Math.floor(Math.random() * (maxPipeHeight - minPipeHeight)) + minPipeHeight;
+  const bottomPipeHeight = gameArea.clientHeight - topPipeHeight - gap;
 
-      const lowerPipe = document.createElement("div");
-      lowerPipe.classList.add("pipe", "lower");
-      lowerPipe.style.height = `${lowerHeight}px`;
-      lowerPipe.style.left = `${pipeX}px`;
+  const topPipe = document.createElement("div");
+  topPipe.classList.add("upperpipe");
+  topPipe.style.height = `${topPipeHeight}px`;
+  topPipe.style.left = `${gameArea.clientWidth}px`;
 
-      game.appendChild(upperPipe);
-      game.appendChild(lowerPipe);
+  const bottomPipe = document.createElement("div");
+  bottomPipe.classList.add("lowerpipe");
+  bottomPipe.style.height = `${bottomPipeHeight}px`;
+  bottomPipe.style.left = `${gameArea.clientWidth}px`;
 
-      movePipe(upperPipe, lowerPipe);
-    };
+  gameArea.appendChild(topPipe);
+  gameArea.appendChild(bottomPipe);
 
-    // Move pipes
-    const movePipe = (upperPipe, lowerPipe) => {
-      let pipeX = window.innerWidth;
-      let passed = false;
+  pipes.push({ top: topPipe, bottom: bottomPipe });
+};
 
-      const interval = setInterval(() => {
-        pipeX -= 2;
-        upperPipe.style.left = `${pipeX}px`;
-        lowerPipe.style.left = `${pipeX}px`;
+// Move pipes using forEach (your preference)
+const movePipes = () => {
+  pipes.forEach((pair, i) => {
+    const { top, bottom } = pair;
+    const newLeft = top.offsetLeft - pipeSpeed;
 
-        // Collision check
-        const birdRect = birb.getBoundingClientRect();
-        const upperRect = upperPipe.getBoundingClientRect();
-        const lowerRect = lowerPipe.getBoundingClientRect();
+    top.style.left = `${newLeft}px`;
+    bottom.style.left = `${newLeft}px`;
 
-        if (
-          (birdRect.left < upperRect.right &&
-           birdRect.right > upperRect.left &&
-           birdRect.top < upperRect.bottom) ||
+    // Remove pipes that are off-screen
+    if (newLeft + top.offsetWidth < 0) {
+      top.remove();
+      bottom.remove();
+      pipes.splice(i, 1);
+    }
+  });
+};
 
-          (birdRect.left < lowerRect.right &&
-           birdRect.right > lowerRect.left &&
-           birdRect.bottom > lowerRect.top)
-        ) {
-          alert("Game Over!");
-          window.location.reload();
-        }
+// Collision detection
+const checkCollision = () => {
+  const birdRect = birdEl.getBoundingClientRect();
 
-        // Score update (only once per pipe pair)
-        if (!passed && pipeX + upperPipe.offsetWidth < birb.offsetLeft) {
-          passed = true;
-          score++;
-          scoreDisplay.textContent = score;
-        }
+  pipes.forEach(({ top, bottom }) => {
+    const topRect = top.getBoundingClientRect();
+    const bottomRect = bottom.getBoundingClientRect();
 
-        // Remove pipes when off-screen
-        if (pipeX + upperPipe.offsetWidth < 0) {
-          clearInterval(interval);
-          upperPipe.remove();
-          lowerPipe.remove();
-        }
-      }, 16);
-    };
+    if (
+      (birdRect.left < topRect.right &&
+       birdRect.right > topRect.left &&
+       birdRect.top < topRect.bottom) ||
+      (birdRect.left < bottomRect.right &&
+       birdRect.right > bottomRect.left &&
+       birdRect.bottom > bottomRect.top)
+    ) {
+      isGameOver = true;
+      console.log("💥 Hit a pipe!");
+    }
+  });
 
-    // Gravity loop
-    const gameLoop = () => {
-      velocity += gravity;
-      y += velocity;
+  if (birdY + birdEl.offsetHeight >= gameArea.clientHeight) {
+    isGameOver = true;
+    console.log("Hit the ground!");
+  }
+};
 
-      if (y < 0) y = 0;
-      if (y + birb.offsetHeight > window.innerHeight) {
-        alert("Game Over!");
-        window.location.reload();
-      }
+// Main loop
+const gameLoop = () => {
+  if (!isGameOver) {
+    velocity += gravity;
+    birdY += velocity;
+    birdEl.style.top = `${birdY}px`;
+    birdEl.style.left = `${birdX}px`;
 
-      birb.style.top = `${y}px`;
-      requestAnimationFrame(gameLoop);
-    };
+    checkCollision();
+    movePipes();
 
-    // Start everything
-    setInterval(generatePipe, 2000);
-    gameLoop();
+    requestAnimationFrame(gameLoop);
+  } else {
+    console.log("Game Over!");
+  }
+};
+
+// Start generating pipes and running loop
+setInterval(generatePipes, 2000);
+requestAnimationFrame(gameLoop);

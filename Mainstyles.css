@@ -1,32 +1,44 @@
-html{
-  height: auto;
-}
-body {
-  background-image: url("./FlappyBird/Bgflappy.webp");
-  background-size: 100vh;
-  font-family: 'Press Start 2P';
-  color: white;
-  background-repeat: repeat-x;
-  background-size: cover;
-}
-.birbs {
-  height: 5%;
-  width: 3%;
-  position: absolute;
-  left: 100px;
-  top: 100px
-}
-.lowerpipe,
-.upperpipe {
-  position: absolute;
-  height: 40%;
-  left: 40%;
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
 }
 
-.lowerpipe {
-  bottom: 0;
+body {
+  background-image: url("./FlappyBird/Bgflappy.webp");
+  background-repeat: repeat-x;
+  background-size: cover;
+  font-family: 'Press Start 2P';
+  color: white;
+}
+
+#container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.birbs {
+  position: absolute;
+  width: 3%;
+  height: 5%;
+  left: 100px;
+  top: 100px;
+}
+
+.upperpipe, .lowerpipe {
+  position: absolute;
+  width: 80px;
+  background-size:cover;
 }
 
 .upperpipe {
   top: 0;
+  right: 40%;
+}
+
+.lowerpipe {
+  bottom: 0;
+  right: 40%;
 }
