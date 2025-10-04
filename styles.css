@@ -18,7 +18,7 @@ h2 {
   place-items: end;
   position: absolute;
   bottom: 10px;
-  right: 50%;
+  left: 10px;
   margin: 0;
   color: red;
 }

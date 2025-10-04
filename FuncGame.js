@@ -15,13 +15,13 @@ const pipeSpeed = 2;
 const pipes = []; // active pipes
 
 // Jump
-document.addEventListener("keydown", (e) => {
-  if (e.code === "Space" || e.code === "ArrowUp") {
+document.addEventListener("keydown", (controls) => {
+  if (controls.code === "Space" || controls.code === "ArrowUp") {
     velocity = jumpStrength;
   }
 });
 
-// Pipe generator
+
 const generatePipes = () => {
   if (isGameOver) return;
 
@@ -46,25 +46,25 @@ const generatePipes = () => {
   gameArea.appendChild(topPipe);
   gameArea.appendChild(bottomPipe);
 
-  pipes.push({ top: topPipe, bottom: bottomPipe });
+  pipes.push(topPipe, bottomPipe);
 };
  
 // Move pipes
 const movePipes = () => {
   pipes.forEach((pipePair, index) => {
-    const { top, bottom } = pipePair;
+    const top = pipePair[0];
+    const bottom = pipePair[1];
     const newLeft = top.offsetLeft - pipeSpeed;
 
-    top.style.left = `${newLeft}px`;
-    bottom.style.left = `${newLeft}px`;
-
+    top.style.left = newLeft + "px";
+    bottom.style.left = newLeft + "px";
+  });
     // remove off-screen pipes
     if (newLeft + top.offsetWidth < 0) {
       top.remove();
       bottom.remove();
-      pipes.splice(index, 1); // works inside forEach because splice changes array in-place
-    }
-  });
+      pipes.filter(index, 1);
+  };
 };
 
 // Collision check
@@ -102,34 +102,34 @@ const checkCollision = () => {
 //   const birdRight = birdLeft + birbaction.offsetWidth;
 //   const birdBottom = birdTop + birbaction.offsetHeight;
 
-//   
+//   // Upper pipe position and size
 //   const upperLeft = upperpipes.offsetLeft;
 //   const upperTop = upperpipes.offsetTop;
 //   const upperRight = upperLeft + upperpipes.offsetWidth;
 //   const upperBottom = upperTop + upperpipes.offsetHeight;
 
-
+//   // Lower pipe position and size
 //   const lowerLeft = lowerpipes.offsetLeft;
 //   const lowerTop = lowerpipes.offsetTop;
 //   const lowerRight = lowerLeft + lowerpipes.offsetWidth;
 //   const lowerBottom = lowerTop + lowerpipes.offsetHeight;
 
-//   Check collision with upper pipe
+//   // Check collision with upper pipe
 //   const hitUpper =
 //     birdRight > upperLeft &&
 //     birdLeft < upperRight &&
 //     birdTop < upperBottom;
 
-//   Check collision with lower pipe
+//   // Check collision with lower pipe
 //   const hitLower =
 //     birdRight > lowerLeft &&
 //     birdLeft < lowerRight &&
 //     birdBottom > lowerTop;
 
-//
+// 
 //   if (hitUpper || hitLower) {
 //     isGameOver = true;
-//     console.log(" Collision detected!");
+//     console.log("    Collision detected!");
 //   }
 // };
 
