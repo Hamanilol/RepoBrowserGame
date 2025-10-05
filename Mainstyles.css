@@ -41,15 +41,3 @@ body {
   bottom: 0;
   right: 40%;
 }
-
-.gamelost {
-   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 2em;
-  color: red;
-  text-align: center;
-  z-index: 10;
-  display: flex;
-}

@@ -3,7 +3,7 @@ const birb = document.querySelector(".birbs");
 const gameArea = document.getElementById("container");
 
 // Bird physics
-let birdX = 100;
+let birdX = 300;
 let birdY = 500;
 let velocity = 0;
 const gravity = 0.5;
@@ -22,8 +22,6 @@ document.addEventListener("keydown", (controls) => {
 });
   // Create pipe elements whenever this function is called
 const generatePipes = () => {
-  if (isGameOver) return;
-
 // Gap and pipe heights
   const gap = 180;
 
@@ -76,11 +74,6 @@ const movePipes = () => {
       pipes.splice(index, 1); // i used mdn.com to learn splice and push https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice push https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/push
     }
   });
-};
-const endGame = () => {
-  if (isGameOver) return;
-  isGameOver = true;
-  gameLostText();
 };
 // Collision check
 const checkCollision = () => {
@@ -171,14 +164,5 @@ const gameLoop = () => {
   }
 };
 
-// inner text function when you lose the game
-const gameLostText = () => {
-  const gameLost = document.getElementById("gamelost");
-  if (isGameOver) {
-    gameLost.innerText = "Game Over! Refresh to play again.";
-  }
-};
-
-
-setInterval(generatePipes, 3000);
+setInterval(generatePipes, 4000);
 requestAnimationFrame(gameLoop);
