@@ -1,9 +1,11 @@
+
+
 body {
   background-image: url(FlappyBird/FrontBGImage.gif);
   background-size: auto;
   font-family: 'Press Start 2P';
   color: white;
-  height: 90vh;
+  height: 100%;
   background-size: cover;
 
 }
