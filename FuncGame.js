@@ -14,7 +14,7 @@ const jumpStrength = -1.5
 let gameStarted = false
 let isGameOver = false
 let pipeSpeed = 2
-const pipes = [] // active pipes
+const pipes = [] 
 let interval = 2500
 let pipeIntervalId;
 
