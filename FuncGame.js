@@ -15,7 +15,7 @@ let gameStarted = false
 let isGameOver = false
 let pipeSpeed = 2
 const pipes = [] // active pipes
-let interval = 1900
+let interval = 2500
 let pipeIntervalId;
 
 // Jump
